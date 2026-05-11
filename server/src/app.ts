@@ -7,13 +7,16 @@ import routes from './routes/index.js';
 
 const app = express();
 
-// Security middleware
-app.use(helmet());
-
-// CORS
+// CORS (must be before helmet)
 app.use(cors({
   origin: config.corsOrigin,
   credentials: true,
+}));
+
+// Security middleware
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  crossOriginOpenerPolicy: { policy: 'unsafe-none' },
 }));
 
 // Body parsing
